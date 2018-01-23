@@ -10,9 +10,9 @@ export function createRouteMap (
   oldPathMap?: Dictionary<RouteRecord>,
   oldNameMap?: Dictionary<RouteRecord>
 ): {
-  pathList: Array<string>;
-  pathMap: Dictionary<RouteRecord>;
-  nameMap: Dictionary<RouteRecord>;
+  pathList: Array<string>;    // 所有 path 列表
+  pathMap: Dictionary<RouteRecord>; // path: RouteRecord 字典
+  nameMap: Dictionary<RouteRecord>; // name: RouteRecord 字典
 } {
   // the path list is used to control path matching priority
   const pathList: Array<string> = oldPathList || []
@@ -164,8 +164,11 @@ function compileRouteRegex (path: string, pathToRegexpOptions: PathToRegexpOptio
 }
 
 function normalizePath (path: string, parent?: RouteRecord, strict?: boolean): string {
+  //尾部不能有/
   if (!strict) path = path.replace(/\/$/, '')
+  //绝对路径直接返回
   if (path[0] === '/') return path
   if (parent == null) return path
+  // cleanPath 防止出现2个//
   return cleanPath(`${parent.path}/${path}`)
 }

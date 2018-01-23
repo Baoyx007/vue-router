@@ -45,6 +45,7 @@ describe('Creating Route Map', function () {
   beforeAll(function () {
     spyOn(console, 'warn')
     maps = createRouteMap(routes)
+    console.log(maps)
   })
 
   beforeEach(function () {

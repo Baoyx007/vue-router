@@ -46,11 +46,12 @@ export declare class VueRouter {
 type Position = { x: number, y: number };
 type PositionResult = Position | { selector: string, offset?: Position } | void;
 
+//构造函数的参数
 export interface RouterOptions {
   routes?: RouteConfig[];
   mode?: RouterMode;
   fallback?: boolean;
-  base?: string;
+  base?: string; // base url
   linkActiveClass?: string;
   linkExactActiveClass?: string;
   parseQuery?: (query: string) => Object;
@@ -70,11 +71,12 @@ export interface PathToRegexpOptions {
   end?: boolean;
 }
 
+// 定义一个路由对象
 export interface RouteConfig {
   path: string;
   name?: string;
   component?: Component;
-  components?: Dictionary<Component>;
+  components?: Dictionary<Component>; // for named views
   redirect?: RedirectOption;
   alias?: string | string[];
   children?: RouteConfig[];
@@ -85,13 +87,14 @@ export interface RouteConfig {
   pathToRegexpOptions?: PathToRegexpOptions;
 }
 
+// Route records are the copies of the objects in the routes configuration Array
 export interface RouteRecord {
-  path: string;
+  path: string; // 这个是完整的绝对路径
   regex: RegExp;
   components: Dictionary<Component>;
   instances: Dictionary<Vue>;
   name?: string;
-  parent?: RouteRecord;
+  parent?: RouteRecord; // 不包括 children, 但是通过 parent 保持关系
   redirect?: RedirectOption;
   matchAs?: string;
   meta: any;

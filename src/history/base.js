@@ -212,6 +212,10 @@ function normalizeBase (base: ?string): string {
   return base.replace(/\/$/, '')
 }
 
+// RouteRecord 不是递归定义的路由, 所以这里需要一个数组保存从父到子的所有路由
+// 所以 current 和 next 是树的两个节点, Array 是从根节点到这个节点的路径
+// 分的这么清楚是由于, 每个路由都有自己的钩子函数, before 和  after, 但是他们依次调用时有顺序的,
+// 调用的顺序就根据这个 Queue 来
 function resolveQueue (
   current: Array<RouteRecord>,
   next: Array<RouteRecord>
@@ -228,9 +232,9 @@ function resolveQueue (
     }
   }
   return {
-    updated: next.slice(0, i),
-    activated: next.slice(i),
-    deactivated: current.slice(i)
+    updated: next.slice(0, i), // 这是公共节点, 不需要更新
+    activated: next.slice(i),   //  新的路径
+    deactivated: current.slice(i) // 旧的路径
   }
 }
 

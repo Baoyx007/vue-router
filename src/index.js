@@ -111,6 +111,7 @@ export default class VueRouter {
       )
     }
 
+    // 每次更新路由后, 更改_route, 而_route 是响应式的
     history.listen(route => {
       this.apps.forEach((app) => {
         app._route = route
@@ -118,6 +119,7 @@ export default class VueRouter {
     })
   }
 
+  //  都是全局的钩子函数
   beforeEach (fn: Function): Function {
     return registerHook(this.beforeHooks, fn)
   }
